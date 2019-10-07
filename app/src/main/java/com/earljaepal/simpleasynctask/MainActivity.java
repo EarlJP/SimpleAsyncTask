@@ -3,6 +3,7 @@ package com.earljaepal.simpleasynctask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     // The TextView where we will show results
     private TextView mTextView = null;
 
+    ProgressBar mProgressBar;
+
     /**
      * Initializes the activity.
      * @param savedInstanceState The current state data
@@ -26,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //  Initialize mTextView
         mTextView = (TextView) findViewById(R.id.textView1);
+
+        mProgressBar = findViewById(R.id.progressBar);
+        mProgressBar.setIndeterminate(false);
+        mProgressBar.setProgress(0);
+        mProgressBar.setMax(10);
 
         // Restore TextView if there is a savedInstanceState
         if(savedInstanceState!=null){
@@ -40,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void startTask (View view) {
+        SimpleAsyncTask task = new SimpleAsyncTask(mTextView);
+
         // Put a message in the text view
         mTextView.setText(R.string.napping);
 
         // Start the AsyncTask.
         // The AsyncTask has a callback that will update the text view.
-        new SimpleAsyncTask(mTextView).execute();
+        //task.setProgressBar(mProgressBar);
+        task.execute();
     }
 
     /**
